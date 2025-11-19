@@ -1,0 +1,10 @@
+{
+  "appId": "com.lamuela.diablo",
+  "appName": "lamuela-del-diablo",
+  "webDir": "dist",
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
+}
