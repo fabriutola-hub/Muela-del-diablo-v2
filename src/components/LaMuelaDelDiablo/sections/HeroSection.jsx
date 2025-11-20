@@ -185,7 +185,7 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
               <div className="bg-white p-4 rounded-2xl mx-auto w-48 h-48 mb-6 flex items-center justify-center">
                 {/* REEMPLAZA ESTA RUTA CON TU IMAGEN REAL */}
                 <img 
-                  src="/imagenes/QRBO.png" 
+                  src="/imagenes/QRPEE.png" 
                   alt="QR Code" 
                   className="w-full h-full object-contain"
                 />
