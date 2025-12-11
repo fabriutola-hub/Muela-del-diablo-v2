@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from 'framer-motion';
 import { menuItems } from '../constants/navigation'; 
 
 const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs }) => {
@@ -7,14 +7,15 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
   const [isScrolled, setIsScrolled] = useState(false);
   const [showQR, setShowQR] = useState(false);
 
-  // 1. Lógica Scroll Header
-  useEffect(() => {
-    const updateScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', updateScroll);
-    return () => window.removeEventListener('scroll', updateScroll);
-  }, []);
+  // 1. Lógica Scroll Header (OPTIMIZADA)
+  // Reemplazo del listener nativo pesado por el hook optimizado de Framer Motion
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const shouldBeScrolled = latest > 50;
+    // Solo actualizamos el estado si el valor realmente cambia
+    if (isScrolled !== shouldBeScrolled) {
+      setIsScrolled(shouldBeScrolled);
+    }
+  });
 
   // 2. Efectos de Parallax (Más sutiles para mantener legibilidad)
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
