@@ -22,8 +22,8 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
   const heroY = useTransform(scrollY, [0, 500], [0, 100]);
 
   // Estilos reutilizables para botones Neo-Brutalistas
-  const btnPrimaryClass = "relative px-8 py-4 bg-arcilla text-white font-display font-bold text-lg uppercase tracking-wider border-3 border-negro-illimani shadow-hard transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
-  const btnSecondaryClass = "relative px-8 py-4 bg-white text-negro-illimani font-display font-bold text-lg uppercase tracking-wider border-3 border-negro-illimani shadow-hard transition-all hover:bg-arena hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
+  const btnPrimaryClass = "relative px-6 py-3 md:px-8 md:py-4 bg-arcilla text-white font-display font-bold text-base md:text-lg uppercase tracking-wider border-3 border-negro-illimani shadow-hard transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
+  const btnSecondaryClass = "relative px-6 py-3 md:px-8 md:py-4 bg-white text-negro-illimani font-display font-bold text-base md:text-lg uppercase tracking-wider border-3 border-negro-illimani shadow-hard transition-all hover:bg-arena hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
 
   return (
     <>
@@ -39,21 +39,21 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
         }`}
         style={{ paddingBlock: isScrolled ? '1rem' : '1.5rem' }}
       >
-        <div className="max-w-[1800px] mx-auto px-6 md:px-12 flex items-center justify-between relative z-50">
+        <div className="max-w-[1800px] mx-auto px-4 md:px-12 flex items-center justify-between relative z-50">
           
           {/* LOGO */}
           <motion.div 
-            className="cursor-pointer border-3 border-transparent hover:border-negro-illimani hover:bg-white p-2 transition-all"
+            className="cursor-pointer border-3 border-transparent hover:border-negro-illimani hover:bg-white p-1 md:p-2 transition-all"
             onClick={() => {
                setMenuOpen(false);
                refs?.heroRef ? scrollToSection(refs.heroRef) : window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
             <div className="flex flex-col leading-none">
-              <span className={`text-2xl font-display font-black tracking-tighter uppercase ${isScrolled ? 'text-negro-illimani' : 'text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]'}`}>
+              <span className={`text-xl md:text-2xl font-display font-black tracking-tighter uppercase ${isScrolled ? 'text-negro-illimani' : 'text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]'}`}>
                 LA MUELA
               </span>
-              <span className="text-xs font-mono font-bold text-arcilla uppercase tracking-widest bg-black px-1 mt-1 w-max">
+              <span className="text-[10px] md:text-xs font-mono font-bold text-arcilla uppercase tracking-widest bg-black px-1 mt-1 w-max">
                 Del Diablo
               </span>
             </div>
@@ -86,12 +86,12 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
 
           {/* BOTÓN HAMBURGUESA (Cuadrado Sólido) */}
           <button 
-            className="md:hidden relative z-50 w-12 h-12 bg-white border-3 border-black shadow-hard-sm flex flex-col justify-center items-center gap-1.5 focus:outline-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
+            className="md:hidden relative z-50 w-10 h-10 md:w-12 md:h-12 bg-white border-3 border-black shadow-hard-sm flex flex-col justify-center items-center gap-1.5 focus:outline-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <motion.span animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="w-8 h-1 bg-black origin-center transition-all" />
-            <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className="w-8 h-1 bg-black transition-all" />
-            <motion.span animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="w-8 h-1 bg-black origin-center transition-all" />
+            <motion.span animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="w-6 h-1 bg-black origin-center transition-all" />
+            <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className="w-6 h-1 bg-black transition-all" />
+            <motion.span animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="w-6 h-1 bg-black origin-center transition-all" />
           </button>
         </div>
 
@@ -194,34 +194,34 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
         </motion.div>
         
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-16 flex flex-col items-center text-center">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-16 flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, ease: "backOut" }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6"
           >
             {/* Etiqueta Superior */}
-            <div className="inline-block bg-white border-3 border-black px-4 py-1 shadow-hard-sm rotate-[-2deg]">
-                <p className="text-sm md:text-base font-mono font-bold text-black uppercase tracking-widest">
+            <div className="inline-block bg-white border-3 border-black px-3 py-1 md:px-4 shadow-hard-sm rotate-[-2deg]">
+                <p className="text-xs md:text-base font-mono font-bold text-black uppercase tracking-widest">
                 📍 La Paz, Bolivia • 3.825 m.s.n.m.
                 </p>
             </div>
             
             {/* Título Principal (Stroke Effect) */}
-            <div className="relative py-4">
-              <h1 className="text-[clamp(3.5rem,13vw,11rem)] font-display font-black leading-[0.85] tracking-tighter text-white drop-shadow-[6px_6px_0px_#000]">
+            <div className="relative py-2 md:py-4">
+              <h1 className="text-[clamp(3rem,13vw,11rem)] font-display font-black leading-[0.85] tracking-tighter text-white drop-shadow-[4px_4px_0px_#000] md:drop-shadow-[6px_6px_0px_#000]">
                 LA MUELA
                 {/* Texto "Del Diablo" con efecto Outline (borde negro, relleno arcilla) */}
-                <span className="block text-arcilla [-webkit-text-stroke:2px_black] md:[-webkit-text-stroke:4px_black] paint-order-stroke fill-current">
+                <span className="block text-arcilla [-webkit-text-stroke:1.5px_black] md:[-webkit-text-stroke:4px_black] paint-order-stroke fill-current">
                    DEL DIABLO
                 </span>
               </h1>
             </div>
             
             {/* Descripción en Caja */}
-            <div className="bg-arena border-3 border-black p-4 max-w-2xl mx-auto shadow-hard rotate-[1deg]">
-                <p className="text-lg md:text-xl font-sans font-medium text-negro-illimani leading-tight">
+            <div className="bg-arena border-3 border-black p-3 md:p-4 max-w-2xl mx-auto shadow-hard rotate-[1deg]">
+                <p className="text-base md:text-xl font-sans font-medium text-negro-illimani leading-tight">
                 Una formación rocosa que desafía al cielo. <br className="hidden md:block"/>
                 La aventura comienza donde termina el asfalto.
                 </p>

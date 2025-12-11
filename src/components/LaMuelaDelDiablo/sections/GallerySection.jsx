@@ -63,28 +63,28 @@ const GallerySection = forwardRef((props, ref) => {
   const galleryInView = useInView(ref, inViewConfig);
 
   return (
-    <section ref={ref} className="py-32 bg-arena border-b-3 border-negro-illimani relative overflow-hidden">
+    <section ref={ref} className="py-20 md:py-32 bg-arena border-b-3 border-negro-illimani relative overflow-hidden">
       
       {/* Fondo Decorativo: Ruido sutil y líneas */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-multiply" />
       
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-24">
+        <div className="flex flex-col items-center text-center mb-16 md:mb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={galleryInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1 bg-white border-2 border-black shadow-hard-sm font-mono text-xs font-bold uppercase tracking-widest mb-6 rotate-2">
+            <span className="inline-block px-4 py-1 bg-white border-2 border-black shadow-hard-sm font-mono text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 rotate-2">
               Archivo Fotográfico
             </span>
             
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <PaintText
                 text="Captura la Magia"
-                className="text-[clamp(3.5rem,8vw,7rem)] font-black leading-none tracking-tighter uppercase"
+                className="text-[clamp(2.5rem,8vw,7rem)] font-black leading-none tracking-tighter uppercase"
                 textColor="text-negro-illimani"
                 highlightColor="bg-paja" // Verde Paja para variar la paleta
                 highlightTextColor="text-negro-illimani"
@@ -94,7 +94,7 @@ const GallerySection = forwardRef((props, ref) => {
               />
             </div>
 
-            <p className="mt-4 text-xl font-sans font-medium text-negro-illimani max-w-lg mx-auto bg-white/50 p-2 border-l-4 border-arcilla">
+            <p className="mt-2 md:mt-4 text-base md:text-xl font-sans font-medium text-negro-illimani max-w-lg mx-auto bg-white/50 p-2 border-l-4 border-arcilla">
               Fragmentos congelados en el tiempo. <br/>
               Una mirada única al Auki Kollo.
             </p>
@@ -102,7 +102,7 @@ const GallerySection = forwardRef((props, ref) => {
         </div>
 
         {/* Grid Masonry (Layout Irregular) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 auto-rows-[300px] w-full p-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 auto-rows-[300px] w-full p-0 md:p-4">
           {galleryImages.map((item, i) => (
             <GalleryCard key={i} item={item} index={i} />
           ))}

@@ -60,28 +60,28 @@ const ExperiencesSection = forwardRef((props, ref) => {
   const sectionInView = useInView(ref, inViewConfig);
 
   return (
-    <section ref={ref} className="py-32 bg-white border-b-3 border-negro-illimani relative overflow-hidden">
+    <section ref={ref} className="py-20 md:py-32 bg-white border-b-3 border-negro-illimani relative overflow-hidden">
       
       {/* Fondo Decorativo: Patrón de Puntos (Dot Grid) */}
       <div className="absolute inset-0 bg-[radial-gradient(#000000_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.05]" />
       
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* Header de Sección */}
-        <div className="grid md:grid-cols-2 gap-12 items-end mb-24">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-end mb-16 md:mb-24">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={sectionInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-3 py-1 bg-paja border-3 border-negro-illimani shadow-hard-sm text-xs font-bold font-mono text-negro-illimani uppercase tracking-widest mb-6">
+            <span className="inline-block px-3 py-1 bg-paja border-3 border-negro-illimani shadow-hard-sm text-xs font-bold font-mono text-negro-illimani uppercase tracking-widest mb-4 md:mb-6">
               Nuestras Actividades
             </span>
             
             <div className="relative">
                 <PaintText
                 text="Vive la Aventura"
-                className="text-[clamp(3.5rem,8vw,6rem)] font-black uppercase leading-[0.9]"
+                className="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.9]"
                 textColor="text-negro-illimani"
                 highlightColor="bg-cielo" // Azul Cielo para contrastar con el naranja
                 highlightTextColor="text-white"
@@ -96,14 +96,14 @@ const ExperiencesSection = forwardRef((props, ref) => {
             initial={{ opacity: 0, y: 20 }}
             animate={sectionInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2 }}
-            className="text-xl font-sans font-medium text-gray-600 border-l-4 border-negro-illimani pl-6 max-w-md ml-auto"
+            className="text-base md:text-xl font-sans font-medium text-gray-600 border-l-4 border-negro-illimani pl-4 md:pl-6 max-w-md md:ml-auto"
           >
             Sumérgete en experiencias diseñadas para conectar tu espíritu con la naturaleza milenaria de Auki Kollo.
           </motion.p>
         </div>
 
         {/* Grid de Tarjetas */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {experiences.map((exp, i) => (
             <ExperienceCard key={i} exp={exp} index={i} />
           ))}

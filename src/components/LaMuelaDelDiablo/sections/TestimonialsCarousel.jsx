@@ -6,7 +6,7 @@ import { testimonials } from '../constants/testimonials';
 // --- Subcomponente: Tarjeta Ticket (Estilo Recibo) ---
 const TestimonialCard = ({ test }) => {
   return (
-    <div className="shrink-0 w-[400px] p-2">
+    <div className="shrink-0 w-[300px] md:w-[400px] p-2">
       <div className="neo-card h-full bg-white flex flex-col relative group hover:bg-paja/20 transition-colors p-0">
         
         {/* Decoración Superior: Línea "Perforada" visual */}
@@ -67,11 +67,11 @@ const TestimonialsCarousel = forwardRef(({ shouldReduceMotion }, ref) => {
   );
 
   return (
-    <section ref={ref} className="py-32 bg-arena border-b-3 border-negro-illimani overflow-hidden">
-      <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+    <section ref={ref} className="py-20 md:py-32 bg-arena border-b-3 border-negro-illimani overflow-hidden">
+      <div className="max-w-[1800px] mx-auto px-4 md:px-12">
         
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-10 md:mb-20">
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
@@ -80,14 +80,14 @@ const TestimonialsCarousel = forwardRef(({ shouldReduceMotion }, ref) => {
             initial="hidden"
             animate={testimonialsInView ? "visible" : "hidden"}
           >
-            <span className="inline-block px-3 py-1 bg-white border-3 border-negro-illimani shadow-hard-sm text-xs font-bold font-mono text-negro-illimani uppercase tracking-widest mb-6 -rotate-2">
+            <span className="inline-block px-3 py-1 bg-white border-3 border-negro-illimani shadow-hard-sm text-xs font-bold font-mono text-negro-illimani uppercase tracking-widest mb-4 md:mb-6 -rotate-2">
               Voces de Viajeros
             </span>
             
-            <div className="mb-10">
+            <div className="mb-6 md:mb-10">
               <PaintText
                 text="Historias Auténticas"
-                className="text-[clamp(3rem,8vw,6rem)] font-black leading-none tracking-tighter uppercase"
+                className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-none tracking-tighter uppercase"
                 textColor="text-negro-illimani"
                 highlightColor="bg-paja"
                 highlightTextColor="text-negro-illimani"
@@ -98,14 +98,14 @@ const TestimonialsCarousel = forwardRef(({ shouldReduceMotion }, ref) => {
             </div>
 
             {/* Stats Blocks (Bloques sólidos) */}
-            <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-12">
-                <div className="bg-white border-3 border-negro-illimani shadow-hard px-6 py-4 flex flex-col items-center min-w-[140px]">
-                    <span className="text-3xl font-display font-black text-arcilla">4.5 ★</span>
-                    <span className="text-xs font-mono font-bold uppercase text-gray-500">Rating Global</span>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8 mt-8 md:mt-12">
+                <div className="bg-white border-3 border-negro-illimani shadow-hard px-4 py-3 md:px-6 md:py-4 flex flex-col items-center min-w-[120px] md:min-w-[140px]">
+                    <span className="text-2xl md:text-3xl font-display font-black text-arcilla">4.5 ★</span>
+                    <span className="text-[10px] md:text-xs font-mono font-bold uppercase text-gray-500">Rating Global</span>
                 </div>
-                <div className="bg-negro-illimani border-3 border-negro-illimani shadow-hard px-6 py-4 flex flex-col items-center min-w-[140px]">
-                    <span className="text-3xl font-display font-black text-white">150+</span>
-                    <span className="text-xs font-mono font-bold uppercase text-gray-400">Opiniones</span>
+                <div className="bg-negro-illimani border-3 border-negro-illimani shadow-hard px-4 py-3 md:px-6 md:py-4 flex flex-col items-center min-w-[120px] md:min-w-[140px]">
+                    <span className="text-2xl md:text-3xl font-display font-black text-white">150+</span>
+                    <span className="text-[10px] md:text-xs font-mono font-bold uppercase text-gray-400">Opiniones</span>
                 </div>
             </div>
           </motion.div>

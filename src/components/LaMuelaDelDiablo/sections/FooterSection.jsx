@@ -40,10 +40,10 @@ const FooterSection = forwardRef((props, ref) => {
         </motion.div>
       </div>
 
-      <div className="max-w-[1800px] mx-auto px-6 md:px-12 pt-20 pb-8">
+      <div className="max-w-[1800px] mx-auto px-4 md:px-12 pt-10 md:pt-20 pb-8">
         
         {/* Grid Principal */}
-        <div className="grid md:grid-cols-12 gap-12 border-b-3 border-white/20 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 border-b-3 border-white/20 pb-10 md:pb-20">
           
           {/* Columna 1: Branding y Newsletter (6 cols) */}
           <div className="md:col-span-6 flex flex-col justify-between">
@@ -52,21 +52,21 @@ const FooterSection = forwardRef((props, ref) => {
               animate={contactInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5 }}
             >
-              <h3 className="text-xl font-mono font-bold uppercase mb-6 text-arcilla">
+              <h3 className="text-lg md:text-xl font-mono font-bold uppercase mb-4 md:mb-6 text-arcilla">
                 Mantente Conectado
               </h3>
-              <p className="text-lg font-sans text-gray-400 mb-8 max-w-md">
+              <p className="text-base md:text-lg font-sans text-gray-400 mb-6 md:mb-8 max-w-md">
                 Recibe guías de ruta, alertas meteorológicas y noticias sobre eventos en La Muela.
               </p>
               
               {/* Newsletter Input Neo-Brutalista */}
-              <form className="flex gap-0 max-w-md" onSubmit={(e) => e.preventDefault()}>
+              <form className="flex flex-col md:flex-row gap-0 max-w-md" onSubmit={(e) => e.preventDefault()}>
                 <input 
                   type="email" 
                   placeholder="TU CORREO @" 
-                  className="flex-1 bg-white text-negro-illimani px-6 py-4 font-mono font-bold focus:outline-none border-3 border-white border-r-0 placeholder:text-gray-500"
+                  className="flex-1 bg-white text-negro-illimani px-4 py-3 md:px-6 md:py-4 font-mono font-bold focus:outline-none border-3 border-white md:border-r-0 placeholder:text-gray-500 w-full"
                 />
-                <button className="bg-arcilla text-white px-8 py-4 font-bold font-display uppercase tracking-wider border-3 border-white hover:bg-orange-600 transition-colors">
+                <button className="bg-arcilla text-white px-6 py-3 md:px-8 md:py-4 font-bold font-display uppercase tracking-wider border-3 border-white border-t-0 md:border-t-3 hover:bg-orange-600 transition-colors w-full md:w-auto">
                   Suscribir
                 </button>
               </form>
@@ -75,14 +75,14 @@ const FooterSection = forwardRef((props, ref) => {
 
           {/* Columna 2: Enlaces (3 cols) */}
           <div className="md:col-span-3">
-            <h4 className="text-sm font-mono font-bold uppercase text-white/50 mb-8 tracking-widest border-b border-white/20 pb-2 inline-block">
+            <h4 className="text-xs md:text-sm font-mono font-bold uppercase text-white/50 mb-6 md:mb-8 tracking-widest border-b border-white/20 pb-2 inline-block">
               Explora
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-3 md:space-y-4">
               {footerLinks.explora.map((link) => (
                 <li key={link.name}>
-                  <a href={link.url} className="text-xl font-display font-bold uppercase hover:text-arcilla hover:ml-2 transition-all flex items-center gap-2 group">
-                    <span className="opacity-0 group-hover:opacity-100 text-arcilla">→</span>
+                  <a href={link.url} className="text-lg md:text-xl font-display font-bold uppercase hover:text-arcilla hover:ml-2 transition-all flex items-center gap-2 group">
+                    <span className="hidden md:inline opacity-0 group-hover:opacity-100 text-arcilla">→</span>
                     {link.name}
                   </a>
                 </li>
@@ -91,9 +91,9 @@ const FooterSection = forwardRef((props, ref) => {
           </div>
 
           {/* Columna 3: Social y Legal (3 cols) */}
-          <div className="md:col-span-3 flex flex-col justify-between h-full">
+          <div className="md:col-span-3 flex flex-col justify-between h-full gap-8 md:gap-0">
             <div>
-              <h4 className="text-sm font-mono font-bold uppercase text-white/50 mb-8 tracking-widest border-b border-white/20 pb-2 inline-block">
+              <h4 className="text-xs md:text-sm font-mono font-bold uppercase text-white/50 mb-6 md:mb-8 tracking-widest border-b border-white/20 pb-2 inline-block">
                 Social
               </h4>
               <div className="flex gap-4">
