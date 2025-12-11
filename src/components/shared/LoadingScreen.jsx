@@ -17,12 +17,13 @@ export default function LoadingScreen() {
   ], []);
 
   useEffect(() => {
-    // Animación de 0 a 100 en 5 segundos
-    const controls = animate(count, 100, { duration: 5, ease: "easeInOut" });
+    // Animación de 0 a 100 en 2.5 segundos (Optimized for performance)
+    const controls = animate(count, 100, { duration: 2.5, ease: "easeInOut" });
     
+    // Cycle phases faster (600ms) to fit in 2.5s
     const phaseInterval = setInterval(() => {
       setCurrentPhase(prev => (prev < phases.length - 1 ? prev + 1 : prev));
-    }, 1200);
+    }, 600);
 
     return () => {
       controls.stop();
