@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import Map, { Source, Layer, NavigationControl, FullscreenControl, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -23,6 +23,16 @@ const STYLE_3D = 'mapbox://styles/mapbox/satellite-streets-v12';
 export default function MapaInteractivo() {
   const mapRef = useRef(null);
   
+  // 1. Detección de móvil para optimizaciones
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Chequeo inicial
+    if (typeof window !== 'undefined') {
+      setIsMobile(window.innerWidth < 768);
+    }
+  }, []);
+
   const [viewState, setViewState] = useState({
     longitude: -68.05, 
     latitude: -16.565,
@@ -78,9 +88,10 @@ export default function MapaInteractivo() {
   }, []);
 
   // Optimización: Memoizar configuración del terreno
+  // En móvil usamos menos exageración para aligerar la carga visual si activan 3D
   const terrainConfig = useMemo(() => 
-    is3D ? { source: 'mapbox-dem', exaggeration: 1.5 } : null,
-    [is3D]
+    is3D ? { source: 'mapbox-dem', exaggeration: isMobile ? 1.0 : 1.5 } : null,
+    [is3D, isMobile]
   );
 
   // Optimización: Memoizar estilo del mapa
@@ -134,11 +145,17 @@ export default function MapaInteractivo() {
         terrain={terrainConfig}
         interactiveLayerIds={['puntos-muela']}
         onClick={handleMapClick}
-        // Optimización: Renderizado asíncrono para mejor performance
+        
+        // --- OPTIMIZACIONES DE RENDIMIENTO ---
+        // Desactiva antialias en móvil (gran mejora de FPS)
+        antialias={!isMobile}
+        // Permite scroll de página con 1 dedo, mapa con 2 dedos (UX estándar móvil)
+        cooperativeGestures={true}
+        // Evita recálculos al esconderse la barra del navegador móvil
+        trackResize={!isMobile}
+        // Renderizado asíncrono
         renderWorldCopies={false}
-        // Optimización: Configurar la calidad de renderizado
-        antialias={true}
-        // Optimización: Reducir carga inicial
+        // Reutilizar contexto WebGL
         reuseMaps
       >
         <NavigationControl position="top-right" />
@@ -160,7 +177,6 @@ export default function MapaInteractivo() {
           id="muela-geojson" 
           type="geojson" 
           data="/data/puntos_muela.geojson"
-          // Optimización: Generar IDs para features
           generateId={true}
         >
           <Layer {...geoJsonLayerStyle} />
@@ -175,7 +191,6 @@ export default function MapaInteractivo() {
             closeOnClick={false}
             anchor="bottom"
             maxWidth="220px"
-            // Optimización: Offset para mejor posicionamiento
             offset={15}
           >
             {popupContent}
