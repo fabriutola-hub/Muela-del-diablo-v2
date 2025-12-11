@@ -183,12 +183,14 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
       {/* ================= HERO SECTION ================= */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-negro-illimani">
         {/* Imagen de Fondo (Sin Blur, Cruda) */}
-        <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute inset-0">
+        <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute inset-0 will-change-transform">
           <img
             src="/imagenes/fondo-muela (1).avif"
             alt="La Muela del Diablo"
             className="w-full h-full object-cover grayscale-[0.3] contrast-125" // Un poco desaturada y contrastada
             loading="eager"
+            decoding="sync" // Es la imagen principal (LCP), debe ser sync y eager
+            fetchPriority="high"
           />
           {/* Overlay de patrón de puntos o líneas (opcional) */}
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>

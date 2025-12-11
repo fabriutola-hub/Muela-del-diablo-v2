@@ -51,7 +51,7 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
               className="w-full h-full max-w-[95vw] max-h-[85vh] relative shadow-hard-xl border-4 border-white bg-black overflow-hidden"
               onClick={e => e.stopPropagation()}
             >
-              <LazyVisor360 src={selectedVisor.src} caption={selectedVisor.caption} />
+              {selectedVisor && <LazyVisor360 src={selectedVisor.src} caption={selectedVisor.caption} />}
             </motion.div>
             
             {/* Botón Cerrar (Estilo Botón Físico) */}

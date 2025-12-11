@@ -36,7 +36,7 @@ const IntroSection = forwardRef(function IntroSection(
 
   // 2. Configuración para RENDERIZADO 3D (se actualiza constantemente)
   // Esto permite pausar el Canvas cuando no se ve
-  const modelInView = useInView(modelContainerRef, { margin: "100px" });
+  const modelInView = useInView(modelContainerRef, { margin: "0px" });
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -150,11 +150,14 @@ const IntroSection = forwardRef(function IntroSection(
               dpr={isMobile ? [1, 1] : [1, 1.5]} // Menor resolución en móvil
               frameloop={modelInView ? "always" : "never"} // Pausa render si no se ve
               shadows={!isMobile} // Sin sombras en móvil
+              performance={{ min: 0.5 }} // Permite degradación de calidad automática
               gl={{ 
                 alpha: true, 
                 antialias: !isMobile, // Sin antialias en móvil
-                preserveDrawingBuffer: true,
-                powerPreference: "high-performance"
+                preserveDrawingBuffer: false, // False para mejor rendimiento
+                powerPreference: "high-performance",
+                stencil: false,
+                depth: true
               }}
             >
               <ambientLight intensity={1.2} />
@@ -165,6 +168,7 @@ const IntroSection = forwardRef(function IntroSection(
                 position={[5, 10, 5]} 
                 castShadow={!isMobile} 
                 shadow-mapSize={[512, 512]} // Mapa de sombras más pequeño
+                shadow-bias={-0.0001}
               />
               <directionalLight intensity={1} position={[-5, 5, -5]} color="#D94E1F" />
 

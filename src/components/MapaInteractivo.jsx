@@ -27,10 +27,18 @@ export default function MapaInteractivo() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Chequeo inicial
-    if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768);
-    }
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+
+    // Throttle simple para resize
+    let timeoutId;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkMobile, 200);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const [viewState, setViewState] = useState({
@@ -157,6 +165,7 @@ export default function MapaInteractivo() {
         renderWorldCopies={false}
         // Reutilizar contexto WebGL
         reuseMaps
+        preserveDrawingBuffer={false} // Aumenta rendimiento
       >
         <NavigationControl position="top-right" />
         <FullscreenControl position="top-right" />
