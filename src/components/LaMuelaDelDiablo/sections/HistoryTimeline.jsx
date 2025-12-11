@@ -13,7 +13,7 @@ const TimelineItem = ({ item, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: 0.1, ease: "circOut" }}
-      className={`relative flex items-center justify-between mb-24 w-full ${
+      className={`relative flex items-center justify-between mb-16 md:mb-24 w-full ${
         isEven ? "md:flex-row-reverse" : "md:flex-row"
       } flex-col`} 
     >
@@ -28,18 +28,18 @@ const TimelineItem = ({ item, index }) => {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
           // Cuadrado negro con centro blanco (Estilo técnico)
-          className="w-8 h-8 bg-white border-4 border-negro-illimani shadow-hard-sm"
+          className="w-6 h-6 md:w-8 md:h-8 bg-white border-3 md:border-4 border-negro-illimani shadow-hard-sm"
         />
       </div>
 
       {/* Tarjeta de Contenido (.neo-card) */}
       <motion.div
         whileHover={{ scale: 1.02, rotate: isEven ? 1 : -1 }}
-        className={`w-full md:w-5/12 pl-16 md:pl-0 ${
-          isEven ? "md:pr-16 text-right" : "md:pl-16 text-left"
+        className={`w-full md:w-5/12 pl-12 md:pl-0 ${
+          isEven ? "md:pr-16 md:text-right" : "md:pl-16 text-left"
         }`}
       >
-        <div className="neo-card p-8 relative overflow-hidden group bg-white hover:bg-paja/20 transition-colors duration-300">
+        <div className="neo-card p-6 md:p-8 relative overflow-hidden group bg-white hover:bg-paja/20 transition-colors duration-300">
           
           {/* Número Gigante de Fondo */}
           <span className={`absolute -bottom-10 text-[8rem] font-display font-black text-gray-200 select-none z-0 group-hover:text-negro-illimani/10 transition-colors ${isEven ? '-left-6' : '-right-6'}`}>
@@ -55,12 +55,12 @@ const TimelineItem = ({ item, index }) => {
             </div>
 
             {/* Título */}
-            <h3 className="text-2xl font-display font-black uppercase leading-none mb-4 text-negro-illimani">
+            <h3 className="text-xl md:text-2xl font-display font-black uppercase leading-none mb-4 text-negro-illimani">
               {item.title}
             </h3>
 
             {/* Descripción */}
-            <p className="text-lg font-sans font-medium text-gray-600 leading-relaxed">
+            <p className="text-base md:text-lg font-sans font-medium text-gray-600 leading-relaxed">
               {item.desc}
             </p>
           </div>
@@ -84,29 +84,29 @@ const HistoryTimeline = forwardRef((props, ref) => {
   });
 
   return (
-    <section ref={ref} className="py-32 bg-arena border-b-3 border-negro-illimani overflow-hidden relative">
+    <section ref={ref} className="py-20 md:py-32 bg-arena border-b-3 border-negro-illimani overflow-hidden relative">
       
       {/* Fondo: Líneas guía (Grid técnico) */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-32">
+        <div className="text-center mb-16 md:mb-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-3 py-1 mb-6 text-xs font-bold font-mono tracking-widest uppercase text-negro-illimani bg-white border-2 border-negro-illimani shadow-hard-sm">
+            <span className="inline-block px-3 py-1 mb-4 md:mb-6 text-xs font-bold font-mono tracking-widest uppercase text-negro-illimani bg-white border-2 border-negro-illimani shadow-hard-sm">
               Cronología Histórica
             </span>
             
-            <div className="mb-8">
+            <div className="mb-6 md:mb-8">
               <PaintText
                 text="Milenios de Historia Viva"
-                className="text-[clamp(3rem,6vw,6rem)] leading-[0.9] tracking-tighter font-black uppercase"
+                className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.9] tracking-tighter font-black uppercase"
                 textColor="text-negro-illimani"
                 highlightColor="bg-arcilla"
                 highlightTextColor="text-white"
@@ -116,7 +116,7 @@ const HistoryTimeline = forwardRef((props, ref) => {
               />
             </div>
 
-            <p className="max-w-2xl mx-auto text-xl font-sans font-medium text-gray-700 leading-relaxed border-t-3 border-negro-illimani pt-6">
+            <p className="max-w-2xl mx-auto text-base md:text-xl font-sans font-medium text-gray-700 leading-relaxed border-t-3 border-negro-illimani pt-4 md:pt-6">
               Un viaje a través del tiempo en Auki Kollo, donde cada estrato geológico
               y cada piedra cuenta la formación de los Andes.
             </p>

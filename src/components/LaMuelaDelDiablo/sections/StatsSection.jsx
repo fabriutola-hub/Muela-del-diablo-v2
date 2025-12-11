@@ -9,7 +9,7 @@ const Corner = ({ className }) => (
 );
 
 const StatsSection = forwardRef((props, ref) => {
-  const inViewConfig = { once: true, margin: "-100px", amount: 0.2 };
+  const inViewConfig = { once: true, margin: "-50px", amount: 0.1 };
   const statsInView = useInView(ref, inViewConfig);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -57,7 +57,7 @@ const StatsSection = forwardRef((props, ref) => {
   };
 
   return (
-    <section ref={ref} className="relative py-32 bg-arcilla border-b-4 border-negro-illimani overflow-hidden">
+    <section ref={ref} className="relative py-20 md:py-32 bg-arcilla border-b-4 border-negro-illimani overflow-hidden">
       
       {/* --- FONDO --- */}
       {/* Ruido */}
@@ -71,15 +71,15 @@ const StatsSection = forwardRef((props, ref) => {
          </svg>
       </div>
 
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* Encabezado de la sección (Estilo Técnico) */}
-        <div className="flex items-end justify-between mb-16 border-b-2 border-negro-illimani pb-4">
+        <div className="flex items-end justify-between mb-10 md:mb-16 border-b-2 border-negro-illimani pb-4">
           <div>
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-negro-illimani/70 block mb-2">
+            <span className="font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest text-negro-illimani/70 block mb-2">
               Datos & Métricas // 04
             </span>
-            <h2 className="text-4xl md:text-5xl font-display font-black text-negro-illimani uppercase leading-none">
+            <h2 className="text-3xl md:text-5xl font-display font-black text-negro-illimani uppercase leading-none">
               Impacto <br/>Geológico
             </h2>
           </div>
@@ -103,7 +103,7 @@ const StatsSection = forwardRef((props, ref) => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group relative border-r-2 border-b-2 border-negro-illimani p-8 md:p-12 cursor-default transition-colors duration-500 overflow-hidden"
+                className="group relative border-r-0 border-l-0 md:border-r-2 border-b-2 border-negro-illimani p-6 md:p-12 cursor-default transition-colors duration-500 overflow-hidden"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -130,14 +130,14 @@ const StatsSection = forwardRef((props, ref) => {
                   </div>
 
                   {/* Número Gigante */}
-                  <div className={`text-6xl md:text-7xl xl:text-8xl font-display font-black tracking-tighter mb-4 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-negro-illimani'}`}>
+                  <div className={`text-5xl md:text-7xl xl:text-8xl font-display font-black tracking-tighter mb-4 transition-colors duration-300 ${isHovered ? 'text-white' : 'text-negro-illimani'}`}>
                     <div className="flex items-baseline">
                       <StatCounter 
                         target={stat.target} 
                         inView={statsInView} 
                         delay={index * 0.15}
                       />
-                      <span className={`text-2xl md:text-3xl ml-1 font-mono font-medium stroke-0 ${isHovered ? 'text-arcilla' : 'text-negro-illimani/60'}`}>
+                      <span className={`text-xl md:text-3xl ml-1 font-mono font-medium stroke-0 ${isHovered ? 'text-arcilla' : 'text-negro-illimani/60'}`}>
                         {stat.suffix}
                       </span>
                     </div>
@@ -145,10 +145,10 @@ const StatsSection = forwardRef((props, ref) => {
 
                   {/* Textos descriptivos */}
                   <div>
-                    <h3 className={`font-bold text-xl uppercase mb-2 transition-colors duration-300 ${isHovered ? 'text-arcilla' : 'text-negro-illimani'}`}>
+                    <h3 className={`font-bold text-lg md:text-xl uppercase mb-2 transition-colors duration-300 ${isHovered ? 'text-arcilla' : 'text-negro-illimani'}`}>
                       {stat.label}
                     </h3>
-                    <p className={`font-mono text-sm leading-relaxed max-w-[80%] transition-colors duration-300 ${isHovered ? 'text-white/80' : 'text-negro-illimani/70'}`}>
+                    <p className={`font-mono text-xs md:text-sm leading-relaxed max-w-[90%] md:max-w-[80%] transition-colors duration-300 ${isHovered ? 'text-white/80' : 'text-negro-illimani/70'}`}>
                       {stat.desc}
                     </p>
                   </div>

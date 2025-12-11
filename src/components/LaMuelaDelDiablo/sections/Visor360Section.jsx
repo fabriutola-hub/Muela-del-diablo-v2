@@ -51,7 +51,7 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
               className="w-full h-full max-w-[95vw] max-h-[85vh] relative shadow-hard-xl border-4 border-white bg-black overflow-hidden"
               onClick={e => e.stopPropagation()}
             >
-              <LazyVisor360 src={selectedVisor.src} caption={selectedVisor.caption} />
+              {selectedVisor && <LazyVisor360 src={selectedVisor.src} caption={selectedVisor.caption} />}
             </motion.div>
             
             {/* Botón Cerrar (Estilo Botón Físico) */}
@@ -60,7 +60,7 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
               animate={{ opacity: 1, scale: 1, transition: { delay: 0.2 } }}
               exit={{ opacity: 0 }}
               onClick={handleCloseVisor}
-              className="absolute top-6 right-6 z-50 w-14 h-14 bg-arcilla text-white border-3 border-white shadow-hard hover:bg-red-600 hover:scale-110 transition-all flex items-center justify-center text-3xl font-bold font-mono"
+              className="absolute top-4 right-4 md:top-6 md:right-6 z-50 w-10 h-10 md:w-14 md:h-14 bg-arcilla text-white border-3 border-white shadow-hard hover:bg-red-600 hover:scale-110 transition-all flex items-center justify-center text-xl md:text-3xl font-bold font-mono"
               aria-label="Cerrar visor"
             >
               ×
@@ -70,21 +70,21 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
       </AnimatePresence>
 
       {/* ================= SECCIÓN PRINCIPAL ================= */}
-      <section ref={ref} className="py-32 bg-arena border-b-3 border-negro-illimani relative overflow-hidden">
+      <section ref={ref} className="py-20 md:py-32 bg-arena border-b-3 border-negro-illimani relative overflow-hidden">
         
         {/* Elemento decorativo de fondo */}
         <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none select-none">
-            <h1 className="text-[15rem] font-display font-black text-negro-illimani leading-none">360</h1>
+            <h1 className="text-[10rem] md:text-[15rem] font-display font-black text-negro-illimani leading-none">360</h1>
         </div>
 
-        <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
           
           {/* Header de Sección */}
           <motion.div
             variants={fadeInUp}
             initial="hidden"
             animate={visor360InView ? "visible" : "hidden"}
-            className="mb-20 flex flex-col md:flex-row items-end justify-between gap-8 border-b-3 border-negro-illimani pb-8"
+            className="mb-10 md:mb-20 flex flex-col md:flex-row items-end justify-between gap-6 md:gap-8 border-b-3 border-negro-illimani pb-6 md:pb-8"
           >
             <div className="max-w-3xl">
                 <span className="inline-block px-3 py-1 bg-negro-illimani text-white text-xs font-mono font-bold uppercase tracking-widest mb-4 shadow-hard-sm">
@@ -95,7 +95,7 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
                 <div className="relative z-10">
                   <PaintText
                     text="Explora como si estuvieras ahí"
-                    className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.9] text-negro-illimani uppercase"
+                    className="text-[clamp(2rem,6vw,5rem)] font-black leading-[0.9] text-negro-illimani uppercase"
                     textColor="text-negro-illimani"
                     highlightColor="bg-cielo" // Azul Cielo para variar
                     highlightTextColor="text-white"
@@ -106,7 +106,7 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
                 </div>
             </div>
             
-            <p className="text-lg font-sans font-medium text-negro-illimani/80 max-w-md text-right md:text-left">
+            <p className="text-base md:text-lg font-sans font-medium text-negro-illimani/80 max-w-md text-left md:text-left">
               Haz click en las tarjetas para abrir el visor panorámico. <br/>
               Compatible con gafas VR 🥽.
             </p>
@@ -117,14 +117,14 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
             variants={staggerContainer}
             initial="hidden"
             animate={visor360InView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           >
             {visorItems.map((item, i) => (
               <motion.div
                 key={item.src + i}
                 variants={fadeInUp}
                 // CLASE NEO-CARD
-                className="neo-card relative h-[450px] flex flex-col cursor-pointer group overflow-hidden"
+                className="neo-card relative h-[350px] md:h-[450px] flex flex-col cursor-pointer group overflow-hidden"
                 onClick={() => handleOpenVisor(item)}
               >
                 {/* Contenedor de Imagen */}

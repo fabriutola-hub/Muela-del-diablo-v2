@@ -98,3 +98,11 @@ img, video, iframe {
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Optimización para animaciones fluidas */
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}

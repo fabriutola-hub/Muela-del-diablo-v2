@@ -70,28 +70,28 @@ const MapSection = forwardRef((props, ref) => {
   ];
 
   return (
-    <section ref={ref} className="py-32 bg-white border-b-3 border-negro-illimani relative overflow-hidden">
+    <section ref={ref} className="py-20 md:py-32 bg-white border-b-3 border-negro-illimani relative overflow-hidden">
       
       {/* Fondo: Patrón Topográfico Sutil */}
       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/Topographic_map_example.png')] bg-cover bg-center grayscale pointer-events-none" />
       
-      <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* --- HEADER --- */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-10 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={mapInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-3 py-1 bg-negro-illimani text-white text-xs font-mono font-bold uppercase tracking-widest mb-6 shadow-hard-sm">
+            <span className="inline-block px-3 py-1 bg-negro-illimani text-white text-xs font-mono font-bold uppercase tracking-widest mb-4 md:mb-6 shadow-hard-sm">
               Coordenadas & Acceso
             </span>
             
-            <div className="mb-8">
+            <div className="mb-6 md:mb-8">
               <PaintText 
                 text="Ruta de Exploración"
-                className="text-[clamp(3rem,6vw,5rem)] font-black uppercase leading-[0.9]"
+                className="text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9]"
                 textColor="text-negro-illimani"
                 highlightColor="bg-paja" 
                 highlightTextColor="text-negro-illimani"
@@ -101,8 +101,8 @@ const MapSection = forwardRef((props, ref) => {
               />
             </div>
             
-            <div className="inline-block bg-arena border-2 border-negro-illimani px-6 py-3 shadow-hard-sm rotate-1">
-                <p className="text-lg font-mono font-bold text-negro-illimani">
+            <div className="inline-block bg-arena border-2 border-negro-illimani px-4 py-2 md:px-6 md:py-3 shadow-hard-sm rotate-1">
+                <p className="text-base md:text-lg font-mono font-bold text-negro-illimani">
                 📍 Mallasa • 3,825 m.s.n.m.
                 </p>
             </div>
@@ -110,7 +110,7 @@ const MapSection = forwardRef((props, ref) => {
         </div>
 
         {/* --- GRID DE CONTENIDO --- */}
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
           
           {/* COLUMNA IZQUIERDA: Tarjetas de Transporte */}
           <div className="lg:col-span-4 space-y-6">
@@ -170,7 +170,7 @@ const MapSection = forwardRef((props, ref) => {
 
           {/* COLUMNA DERECHA: Mapa "Enmarcado" */}
           <motion.div
-            className="lg:col-span-8 h-[600px] relative"
+            className="lg:col-span-8 h-[400px] md:h-[600px] relative"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={mapInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
