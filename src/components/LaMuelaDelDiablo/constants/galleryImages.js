@@ -18,7 +18,7 @@ export const galleryImages = [
     { 
       col: "col-span-12 md:col-span-4", 
       row: "row-span-1", 
-      img: "/imagenes/foto muela.avif",
+      img: "/imagenes/foto-muela.avif",
       alt: "La Muela vista desde la ciudad",
       caption: "Desde La Paz",
       description: "Icono visible desde toda la ciudad"

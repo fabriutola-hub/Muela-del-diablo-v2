@@ -72,7 +72,9 @@ const MapSection = forwardRef((props, ref) => {
   return (
     <section ref={ref} className="py-20 md:py-32 bg-white border-b-3 border-negro-illimani relative overflow-hidden">
       
-      {/* Fondo: Patrón Topográfico Sutil */}
+      {/* Fondo: Patrón Topográfico Sutil - Reemplazado por Noise */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-multiply pointer-events-none z-0" />
+
       <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* --- HEADER --- */}
