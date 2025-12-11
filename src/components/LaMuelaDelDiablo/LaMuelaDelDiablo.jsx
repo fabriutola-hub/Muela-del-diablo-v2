@@ -27,7 +27,8 @@ export default function LaMuelaDelDiablo() {
 
   useEffect(() => {
     // Timer para simular carga o esperar animaciones iniciales
-    const timer = setTimeout(() => setIsLoaded(true), 8450);
+    // Optimized: Reduced from 8450ms to 2500ms for better UX
+    const timer = setTimeout(() => setIsLoaded(true), 2500);
     return () => clearTimeout(timer);
   }, []);
 
