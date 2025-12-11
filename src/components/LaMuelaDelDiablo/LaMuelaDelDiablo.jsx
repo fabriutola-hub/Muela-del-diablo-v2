@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, useReducedMotion } from "framer-motion";
 import LoadingScreen from "@/components/shared/LoadingScreen";
 import Chatbot from '@/components/shared/Chatbot';
-// 👇 AQUÍ ESTABA EL ERROR: Cambiado 'hooks' por 'Hooks'
+// 👇 Asegúrate de que la carpeta se llame exactamente 'Hooks' (con mayúscula) o 'hooks' en tu proyecto
 import { useSectionRefs } from './Hooks/useSectionRefs';
 
 // Lazy load secciones
@@ -26,13 +26,16 @@ export default function LaMuelaDelDiablo() {
   const refs = useSectionRefs();
 
   useEffect(() => {
+    // Timer para simular carga o esperar animaciones iniciales
     const timer = setTimeout(() => setIsLoaded(true), 8450);
     return () => clearTimeout(timer);
   }, []);
 
   const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    setMenuOpen(false);
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      setMenuOpen(false);
+    }
   };
 
   const handleOpenVisor = (item) => {
@@ -54,6 +57,7 @@ export default function LaMuelaDelDiablo() {
       <div className="w-full max-w-[100vw] overflow-x-hidden">
         <div className="bg-black text-white">
           
+          {/* Suspense maneja la carga perezosa de los componentes */}
           <Suspense fallback={<div className="min-h-screen bg-black" />}>
             <HeroSection 
               isLoaded={isLoaded}
@@ -71,6 +75,7 @@ export default function LaMuelaDelDiablo() {
               mapRef={refs.mapRef}
             />
             
+            {/* Asegúrate de que useSectionRefs devuelva 'visitsRef'. Si da error, verifica el nombre en el hook */}
             <ExperiencesSection ref={refs.visitsRef} />
             
             <HistoryTimeline ref={refs.historyRef} />
@@ -100,5 +105,3 @@ export default function LaMuelaDelDiablo() {
     </>
   );
 }
-
-// Proyecto desplegado por Fabricio

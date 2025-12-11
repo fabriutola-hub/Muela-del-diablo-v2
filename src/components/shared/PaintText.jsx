@@ -4,13 +4,14 @@ import { useMemo } from "react";
 export default function PaintText({
   text,
   className,
-  paintedColor = "rgb(55, 65, 81)",
-  unpaintedColor = "rgba(55, 65, 81, 0.2)",
-  animationDuration = 0.8, // Un poco más lento para apreciar la elegancia
-  staggerDelay = 0.04,
-  ease = [0.33, 1, 0.68, 1], // Curva "Cubic Bezier" suave y moderna
+  // Colores por defecto de tu paleta Neo-Brutalista
+  textColor = "text-negro-illimani", // Color base (Negro)
+  highlightColor = "bg-arcilla",     // Color del resaltado (Naranja/Arcilla)
+  highlightTextColor = "text-white", // Color del texto cuando está resaltado
+  animationDuration = 0.6, 
+  staggerDelay = 0.05,
+  ease = [0.25, 1, 0.5, 1], // Curva más "rápida" y técnica
   bicolor = false,
-  secondaryColor = "#e63946",
   secondaryStartWord = null
 }) {
   const shouldReduceMotion = useReducedMotion();
@@ -27,100 +28,75 @@ export default function PaintText({
     },
   }), [shouldReduceMotion, staggerDelay]);
 
-  // Variantes de la PALABRA (La animación principal)
+  // Variantes de la PALABRA (Bloque sólido)
   const wordVariants = useMemo(() => ({
     hidden: {
-      y: "120%", // Empieza totalmente fuera de la vista (abajo)
-      rotateX: 40, // Inclinado hacia atrás
+      y: "110%", // Escondido justo debajo
       opacity: 0,
-      backgroundSize: "0% 100%", // Pintura vacía
+      rotate: 3, // Ligeramente rotado para dar sensación de "papel desordenado" al entrar
     },
     visible: {
       y: "0%",
-      rotateX: 0,
       opacity: 1,
-      backgroundSize: "100% 100%", // Pintura llena
+      rotate: 0,
       transition: {
-        // Animación de posición y rotación (El "Pop")
         y: {
           duration: shouldReduceMotion ? 0 : animationDuration,
           ease: ease,
         },
-        rotateX: {
-          duration: shouldReduceMotion ? 0 : animationDuration,
-          ease: ease,
-        },
-        opacity: { duration: 0.4 }, // Aparece rápido
-        // Animación de la pintura (El "Fill") - Ligeramente retrasada para efecto visual
-        backgroundSize: {
-          duration: animationDuration * 0.8,
-          delay: 0.1,
+        rotate: {
+          duration: animationDuration,
           ease: "easeOut",
         },
+        opacity: { duration: 0.2 }
       },
     },
   }), [shouldReduceMotion, animationDuration, ease]);
 
-  // Lógica de color (Mantenemos tu lógica intacta)
-  const getWordColor = (index) => {
-    if (!bicolor) return paintedColor;
+  // Lógica para decidir si una palabra lleva "Resaltador" (Highlighter)
+  const isHighlighted = (index) => {
+    if (!bicolor) return false;
     
     if (secondaryStartWord) {
       const startIndex = words.findIndex(word => 
         word.toLowerCase().includes(secondaryStartWord.toLowerCase())
       );
-      return (startIndex !== -1 && index >= startIndex) ? secondaryColor : paintedColor;
+      return startIndex !== -1 && index >= startIndex;
     }
     
     const midPoint = Math.floor(words.length / 2);
-    return index >= midPoint ? secondaryColor : paintedColor;
+    return index >= midPoint;
   };
 
   return (
-    <motion.h2 // Cambiado a h2 o div según semántica, permite mejor SEO
-      className={`${className} leading-tight tracking-tight`} // Tracking tight se ve más moderno
+    <motion.h2 
+      className={`${className} font-display leading-[0.9] tracking-tight`} // Forzamos font-display
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3, margin: "0px 0px -10% 0px" }}
-      style={{ perspective: "1000px" }} // Necesario para el efecto 3D
     >
       {words.map((word, index) => {
-        const wordColor = getWordColor(index);
+        const highlighted = isHighlighted(index);
         
         return (
-          // WRAPPER: Crea la máscara de recorte (El secreto del look "Agency")
+          // MÁSCARA DE RECORTE (Clipping Mask)
           <span 
             key={`${word}-${index}`} 
-            style={{ 
-              display: "inline-block", 
-              overflow: "hidden", 
-              verticalAlign: "bottom",
-              marginRight: "0.25em",
-              paddingBottom: "0.1em" // Evita cortar letras como g, j, p
-            }}
+            className="inline-block overflow-hidden align-bottom mr-[0.2em] pb-[0.1em]"
           >
             <motion.span
               variants={wordVariants}
-              whileHover={{ 
-                scale: 1.05, 
-                y: -2,
-                transition: { duration: 0.2 } 
-              }}
-              style={{
-                display: "inline-block",
-                color: unpaintedColor,
-                // El degradado ahora soporta un ligero brillo en el borde
-                backgroundImage: `linear-gradient(to right, ${wordColor}, ${wordColor})`,
-                backgroundPosition: "0 0",
-                backgroundRepeat: "no-repeat",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                willChange: "transform, background-size", // Optimización GPU
-                transformOrigin: "bottom center", // Rotación desde la base
-              }}
+              className={`inline-block px-1 relative ${highlighted ? `${highlightTextColor}` : textColor}`}
             >
+              {/* CAPA DE RESALTADO (Highlighter) - Solo aparece si highlighted es true */}
+              {highlighted && (
+                <span 
+                  className={`absolute inset-0 ${highlightColor} -z-10 transform skew-x-[-10deg] border-2 border-black shadow-[2px_2px_0px_black]`}
+                ></span>
+              )}
+              
+              {/* PALABRA */}
               {word}
             </motion.span>
           </span>

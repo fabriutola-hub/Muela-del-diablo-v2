@@ -5,7 +5,6 @@ import { menuItems } from '../constants/navigation';
 const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs }) => {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
-  // Estado para controlar la ventana del QR
   const [showQR, setShowQR] = useState(false);
 
   // 1. Lógica Scroll Header
@@ -17,20 +16,24 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
     return () => window.removeEventListener('scroll', updateScroll);
   }, []);
 
-  // 2. Efectos de Parallax
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const heroY = useTransform(scrollY, [0, 300], [0, -30]);
+  // 2. Efectos de Parallax (Más sutiles para mantener legibilidad)
+  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const heroY = useTransform(scrollY, [0, 500], [0, 100]);
+
+  // Estilos reutilizables para botones Neo-Brutalistas
+  const btnPrimaryClass = "relative px-8 py-4 bg-arcilla text-white font-display font-bold text-lg uppercase tracking-wider border-3 border-negro-illimani shadow-hard transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
+  const btnSecondaryClass = "relative px-8 py-4 bg-white text-negro-illimani font-display font-bold text-lg uppercase tracking-wider border-3 border-negro-illimani shadow-hard transition-all hover:bg-arena hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
 
   return (
     <>
-      {/* ================= HEADER ================= */}
+      {/* ================= HEADER NEO-BRUTALISTA ================= */}
       <motion.header 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${
+        transition={{ duration: 0.6, ease: "circOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 border-b-3 ${
           isScrolled || menuOpen 
-            ? "bg-black/90 backdrop-blur-xl border-white/10 shadow-lg" 
+            ? "bg-arena border-negro-illimani" 
             : "bg-transparent border-transparent"
         }`}
         style={{ paddingBlock: isScrolled ? '1rem' : '1.5rem' }}
@@ -39,111 +42,91 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
           
           {/* LOGO */}
           <motion.div 
-            className="relative group cursor-pointer"
+            className="cursor-pointer border-3 border-transparent hover:border-negro-illimani hover:bg-white p-2 transition-all"
             onClick={() => {
                setMenuOpen(false);
                refs?.heroRef ? scrollToSection(refs.heroRef) : window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            whileHover="hover"
           >
-            <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-poppins font-bold tracking-tighter text-white">
+            <div className="flex flex-col leading-none">
+              <span className={`text-2xl font-display font-black tracking-tighter uppercase ${isScrolled ? 'text-negro-illimani' : 'text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]'}`}>
                 LA MUELA
               </span>
-              <span className="text-[10px] md:text-xs font-montserrat tracking-[0.4em] text-orange-500 uppercase group-hover:text-white transition-colors duration-300">
+              <span className="text-xs font-mono font-bold text-arcilla uppercase tracking-widest bg-black px-1 mt-1 w-max">
                 Del Diablo
               </span>
             </div>
-            <motion.div className="absolute -inset-4 bg-orange-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </motion.div>
           
-          {/* NAVEGACIÓN DESKTOP */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/5 backdrop-blur-sm">
+          {/* NAVEGACIÓN DESKTOP (Estilo Toolbar) */}
+          <nav className="hidden md:flex items-center gap-4">
             {menuItems && menuItems.map((item, i) => (
-              <motion.button
+              <button
                 key={item.name}
-                onClick={() => {
-                  if (refs && item.ref && refs[item.ref]) {
-                    scrollToSection(refs[item.ref]);
-                  }
-                }}
-                className="relative px-5 py-2 text-sm font-montserrat font-medium text-white/70 transition-colors rounded-full overflow-hidden group"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
+                onClick={() => refs && item.ref && refs[item.ref] && scrollToSection(refs[item.ref])}
+                className={`text-sm font-bold font-mono uppercase hover:underline decoration-4 decoration-arcilla underline-offset-4 transition-all ${
+                    isScrolled ? 'text-negro-illimani' : 'text-white drop-shadow-[1px_1px_0px_black]'
+                }`}
               >
-                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
-                <span className="relative z-10 group-hover:text-white transition-colors">{item.name}</span>
-              </motion.button>
+                {item.name}
+              </button>
             ))}
 
-            {/* 🔥 BOTÓN QUE ABRE EL QR 🔥 */}
+            {/* BOTÓN APP (Estilo Etiqueta) */}
             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setShowQR(true)} // Abre el modal
-                className="ml-2 px-5 py-2 bg-white text-black rounded-full text-xs md:text-sm font-bold font-montserrat hover:bg-orange-500 hover:text-white transition-colors duration-300 flex items-center gap-2"
+                onClick={() => setShowQR(true)}
+                className="ml-4 px-4 py-2 bg-white text-black border-3 border-black shadow-hard-sm font-bold font-mono text-xs flex items-center gap-2 hover:bg-arcilla hover:text-white transition-colors"
             >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                APP
+                APP ANDROID ↓
             </motion.button>
           </nav>
 
-          {/* BOTÓN HAMBURGUESA (MÓVIL) */}
-          <motion.button 
-            className="md:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-center gap-1.5 focus:outline-none"
+          {/* BOTÓN HAMBURGUESA (Cuadrado Sólido) */}
+          <button 
+            className="md:hidden relative z-50 w-12 h-12 bg-white border-3 border-black shadow-hard-sm flex flex-col justify-center items-center gap-1.5 focus:outline-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
             onClick={() => setMenuOpen(!menuOpen)}
-            whileTap={{ scale: 0.9 }}
           >
-            <motion.span animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="w-6 h-0.5 bg-white origin-center transition-all duration-300" />
-            <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className="w-6 h-0.5 bg-white transition-all duration-300" />
-            <motion.span animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="w-6 h-0.5 bg-white origin-center transition-all duration-300" />
-          </motion.button>
+            <motion.span animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="w-8 h-1 bg-black origin-center transition-all" />
+            <motion.span animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className="w-8 h-1 bg-black transition-all" />
+            <motion.span animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="w-8 h-1 bg-black origin-center transition-all" />
+          </button>
         </div>
 
-        {/* MENÚ MÓVIL DESPLEGABLE */}
+        {/* MENÚ MÓVIL (Pantalla Completa Color Arena) */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "100vh", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden absolute top-0 left-0 right-0 bg-black/95 backdrop-blur-2xl z-40 flex flex-col items-center justify-center pt-20 border-b border-white/10 shadow-2xl overflow-hidden"
+              initial={{ y: "-100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ duration: 0.4, ease: "circOut" }}
+              className="md:hidden absolute top-0 left-0 right-0 h-screen bg-arena z-40 flex flex-col items-center justify-center border-b-3 border-negro-illimani"
             >
-              <div className="flex flex-col gap-6 text-center">
+              <div className="flex flex-col gap-8 text-center">
                 {menuItems && menuItems.map((item, i) => (
                   <motion.button
                     key={item.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + i * 0.1 }}
                     onClick={() => {
                       setMenuOpen(false);
-                      if (refs && item.ref && refs[item.ref]) {
-                        scrollToSection(refs[item.ref]);
-                      }
+                      if (refs && item.ref && refs[item.ref]) scrollToSection(refs[item.ref]);
                     }}
-                    className="text-2xl font-poppins font-bold text-white/80 hover:text-orange-500 transition-colors"
+                    className="text-4xl font-display font-black text-negro-illimani uppercase hover:text-arcilla hover:underline decoration-4 transition-all"
                   >
                     {item.name}
                   </motion.button>
                 ))}
                 
-                {/* Botón QR en Móvil */}
                 <motion.button
                    initial={{ opacity: 0, y: 20 }}
                    animate={{ opacity: 1, y: 0 }}
                    transition={{ delay: 0.5 }}
-                   onClick={() => {
-                       setMenuOpen(false);
-                       setShowQR(true);
-                   }}
-                   className="mt-4 px-8 py-3 bg-white text-black rounded-full text-sm font-bold hover:bg-orange-500 hover:text-white transition-all"
+                   onClick={() => { setMenuOpen(false); setShowQR(true); }}
+                   className={btnPrimaryClass}
                 >
                    DESCARGAR APP
                 </motion.button>
@@ -153,51 +136,42 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
         </AnimatePresence>
       </motion.header>
 
-      {/* ================= MODAL QR (NUEVO) ================= */}
+      {/* ================= MODAL QR (Estilo Retro OS) ================= */}
       <AnimatePresence>
         {showQR && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-            onClick={() => setShowQR(false)} // Cierra al hacer click fuera
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-negro-illimani/50 p-4"
+            onClick={() => setShowQR(false)}
           >
             <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              initial={{ scale: 0.8, rotate: -2 }}
+              animate={{ scale: 1, rotate: 0 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()} // Evita cierre al clickear dentro
-              className="bg-[#1a1a1a] border border-white/10 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white border-3 border-negro-illimani shadow-hard-xl p-0 max-w-sm w-full relative"
             >
-              {/* Botón Cerrar X */}
-              <button 
-                onClick={() => setShowQR(false)}
-                className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-              </button>
-
-              <h3 className="text-2xl font-poppins font-bold text-white mb-2">Descarga la App</h3>
-              <p className="text-white/60 text-sm mb-6 font-montserrat">Escanea el código para vivir la experiencia completa en Android.</p>
-              
-              {/* Contenedor del QR */}
-              <div className="bg-white p-4 rounded-2xl mx-auto w-48 h-48 mb-6 flex items-center justify-center">
-                {/* REEMPLAZA ESTA RUTA CON TU IMAGEN REAL */}
-                <img 
-                  src="/imagenes/QRPEE.png" 
-                  alt="QR Code" 
-                  className="w-full h-full object-contain"
-                />
+              {/* Barra de Título Falsa */}
+              <div className="bg-arcilla border-b-3 border-negro-illimani p-2 flex justify-between items-center">
+                 <span className="font-mono font-bold text-white uppercase text-xs">SYSTEM_QR_V1.exe</span>
+                 <button onClick={() => setShowQR(false)} className="bg-white border-2 border-black w-6 h-6 flex items-center justify-center font-bold hover:bg-black hover:text-white">×</button>
               </div>
 
-              <div className="flex flex-col gap-3">
-                <p className="text-xs text-orange-500 font-mono uppercase tracking-widest">Versión 1.0 Beta</p>
+              <div className="p-8 text-center">
+                <h3 className="text-2xl font-display font-black text-negro-illimani mb-2 uppercase">¡Escanea Ya!</h3>
+                <p className="text-negro-illimani font-mono text-xs mb-6 border-b-2 border-dashed border-gray-300 pb-4">Acceso directo a la experiencia móvil.</p>
+                
+                <div className="bg-arena border-3 border-negro-illimani p-2 mx-auto w-48 h-48 mb-6">
+                  <img src="/imagenes/QRPEE.png" alt="QR Code" className="w-full h-full object-contain mix-blend-multiply" />
+                </div>
+
                 <button 
                     onClick={() => setShowQR(false)}
-                    className="w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors text-sm font-semibold"
+                    className="w-full py-3 bg-negro-illimani text-white font-mono font-bold uppercase hover:bg-arcilla transition-colors border-2 border-transparent"
                 >
-                    Cerrar Ventana
+                    [ Cerrar Ventana ]
                 </button>
               </div>
             </motion.div>
@@ -206,46 +180,72 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
       </AnimatePresence>
 
       {/* ================= HERO SECTION ================= */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-negro-illimani">
+        {/* Imagen de Fondo (Sin Blur, Cruda) */}
         <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute inset-0">
           <img
             src="/imagenes/fondo-muela (1).avif"
             alt="La Muela del Diablo"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover grayscale-[0.3] contrast-125" // Un poco desaturada y contrastada
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90" />
+          {/* Overlay de patrón de puntos o líneas (opcional) */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
         </motion.div>
         
-        <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-16 text-center pt-24 md:pt-1">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-16 flex flex-col items-center text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="space-y-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, ease: "backOut" }}
+            className="space-y-6"
           >
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.4 }} className="text-xl md:text-2xl text-white/80 font-montserrat font-medium uppercase tracking-[0.3em]">
-              La Paz, Bolivia
-            </motion.p>
-            
-            <div className="overflow-visible">
-              <motion.h1 initial={{ y: "100%" }} animate={isLoaded ? { y: 0 } : { y: "100%" }} transition={{ delay: 0.7, duration: 0.7, ease: [0.33, 1, 0.68, 1] }} className="text-[clamp(3rem,10vw,10rem)] font-poppins font-black leading-[0.85] tracking-tighter">
-                <span className="block drop-shadow-2xl">LA MUELA</span>
-                <span className="block bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">DEL DIABLO</span>
-              </motion.h1>
+            {/* Etiqueta Superior */}
+            <div className="inline-block bg-white border-3 border-black px-4 py-1 shadow-hard-sm rotate-[-2deg]">
+                <p className="text-sm md:text-base font-mono font-bold text-black uppercase tracking-widest">
+                📍 La Paz, Bolivia • 3.825 m.s.n.m.
+                </p>
             </div>
             
-            <motion.p initial={{ opacity: 0, y: 15 }} animate={isLoaded ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.9, duration: 0.4 }} className="text-xl md:text-3xl max-w-4xl mx-auto font-inter font-light leading-relaxed text-white/90">
-              Con 3650 metros de altura.<br />Una formación rocosa increíble.
-            </motion.p>
+            {/* Título Principal (Stroke Effect) */}
+            <div className="relative py-4">
+              <h1 className="text-[clamp(3.5rem,13vw,11rem)] font-display font-black leading-[0.85] tracking-tighter text-white drop-shadow-[6px_6px_0px_#000]">
+                LA MUELA
+                {/* Texto "Del Diablo" con efecto Outline (borde negro, relleno arcilla) */}
+                <span className="block text-arcilla [-webkit-text-stroke:2px_black] md:[-webkit-text-stroke:4px_black] paint-order-stroke fill-current">
+                   DEL DIABLO
+                </span>
+              </h1>
+            </div>
             
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={isLoaded ? { opacity: 1, y: 0 } : {}} transition={{ delay: 1.1, duration: 0.4 }} className="flex flex-wrap justify-center gap-6 pt-8">
-              <motion.button whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} onClick={() => refs?.visitsRef && scrollToSection(refs.visitsRef)} className="px-12 py-5 bg-white text-black rounded-full text-lg font-montserrat font-semibold hover:bg-white/90 transition-all">
-                Explorar Ahora
-              </motion.button>
-              <motion.button whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} onClick={() => window.open("https://youtu.be/rWI3CJuGtqw?si=uctoVK6EGmiFyJMp", "_blank")} className="px-12 py-5 border-2 border-white/30 backdrop-blur-sm rounded-full text-lg font-montserrat font-semibold hover:bg-white/10 transition-all">
-                Ver Video
-              </motion.button>
+            {/* Descripción en Caja */}
+            <div className="bg-arena border-3 border-black p-4 max-w-2xl mx-auto shadow-hard rotate-[1deg]">
+                <p className="text-lg md:text-xl font-sans font-medium text-negro-illimani leading-tight">
+                Una formación rocosa que desafía al cielo. <br className="hidden md:block"/>
+                La aventura comienza donde termina el asfalto.
+                </p>
+            </div>
+            
+            {/* Botones de Acción */}
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.8 }}
+                className="flex flex-col md:flex-row gap-6 pt-8 items-center justify-center w-full"
+            >
+              <button 
+                onClick={() => refs?.visitsRef && scrollToSection(refs.visitsRef)} 
+                className={btnPrimaryClass}
+              >
+                Explorar Ruta
+              </button>
+              
+              <button 
+                onClick={() => window.open("https://youtu.be/rWI3CJuGtqw?si=uctoVK6EGmiFyJMp", "_blank")} 
+                className={btnSecondaryClass}
+              >
+                ▶ Ver Video
+              </button>
             </motion.div>
           </motion.div>
         </div>

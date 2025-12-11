@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+// ✅ RECUPERAMOS PaintText (Ahora que ya tiene el estilo nuevo)
 import PaintText from '@/components/shared/PaintText';
 import LazyVisor360 from '@/components/LazyVisor360';
 import { visorItems } from '../constants/visorItems';
@@ -9,11 +10,11 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
   const visor360InView = useInView(ref, inViewConfig);
 
   const fadeInUp = {
-    hidden: { opacity: 0, y: 15 },
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "backOut" }
     }
   };
 
@@ -22,43 +23,44 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.05
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   };
 
   return (
     <>
-      {/* Modal 360° */}
+      {/* ================= MODAL 360° (Estilo Cine/Oscuro) ================= */}
       <AnimatePresence>
         {selectedVisor && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] bg-negro-illimani/90 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={handleCloseVisor}
           >
             <motion.div
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.98, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="w-full h-full max-w-[90vw] max-h-[90vh] relative shadow-2xl rounded-2xl overflow-hidden"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "circOut" }}
+              // Borde blanco grueso para resaltar sobre el fondo oscuro
+              className="w-full h-full max-w-[95vw] max-h-[85vh] relative shadow-hard-xl border-4 border-white bg-black overflow-hidden"
               onClick={e => e.stopPropagation()}
             >
               <LazyVisor360 src={selectedVisor.src} caption={selectedVisor.caption} />
             </motion.div>
             
-            {/* Botón Cerrar */}
+            {/* Botón Cerrar (Estilo Botón Físico) */}
             <motion.button
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1, transition: { delay: 0.05 } }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1, transition: { delay: 0.2 } }}
+              exit={{ opacity: 0 }}
               onClick={handleCloseVisor}
-              className="absolute top-4 right-4 md:top-6 md:right-6 z-50 w-12 h-12 bg-white/20 hover:bg-white/30 text-white rounded-full text-2xl font-bold flex items-center justify-center transition-colors backdrop-blur-sm"
+              className="absolute top-6 right-6 z-50 w-14 h-14 bg-arcilla text-white border-3 border-white shadow-hard hover:bg-red-600 hover:scale-110 transition-all flex items-center justify-center text-3xl font-bold font-mono"
               aria-label="Cerrar visor"
             >
               ×
@@ -67,49 +69,50 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
         )}
       </AnimatePresence>
 
-      {/* Sección Principal */}
-      <section ref={ref} className="py-40 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-[1800px] mx-auto px-8 md:px-16">
+      {/* ================= SECCIÓN PRINCIPAL ================= */}
+      <section ref={ref} className="py-32 bg-arena border-b-3 border-negro-illimani relative overflow-hidden">
+        
+        {/* Elemento decorativo de fondo */}
+        <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none select-none">
+            <h1 className="text-[15rem] font-display font-black text-negro-illimani leading-none">360</h1>
+        </div>
+
+        <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
           
-          {/* Header */}
+          {/* Header de Sección */}
           <motion.div
             variants={fadeInUp}
             initial="hidden"
             animate={visor360InView ? "visible" : "hidden"}
-            className="text-center mb-24"
+            className="mb-20 flex flex-col md:flex-row items-end justify-between gap-8 border-b-3 border-negro-illimani pb-8"
           >
-            <motion.span 
-              initial={{ opacity: 0 }}
-              animate={visor360InView ? { opacity: 1 } : {}}
-              className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-semibold uppercase tracking-wider mb-8"
-            >
-              🌐 Inmersión 360°
-            </motion.span>
+            <div className="max-w-3xl">
+                <span className="inline-block px-3 py-1 bg-negro-illimani text-white text-xs font-mono font-bold uppercase tracking-widest mb-4 shadow-hard-sm">
+                🌐 Zona Inmersiva
+                </span>
+                
+                {/* 🔥 ACTUALIZADO: Usamos PaintText para consistencia */}
+                <div className="relative z-10">
+                  <PaintText
+                    text="Explora como si estuvieras ahí"
+                    className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.9] text-negro-illimani uppercase"
+                    textColor="text-negro-illimani"
+                    highlightColor="bg-cielo" // Azul Cielo para variar
+                    highlightTextColor="text-white"
+                    bicolor={true}
+                    secondaryStartWord="estuvieras"
+                    animationDuration={0.6}
+                  />
+                </div>
+            </div>
             
-            <h2 className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight">
-              <PaintText
-                text="Explora como si estuvieras ahí"
-                className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
-                paintedColor="#ffffff"
-                unpaintedColor="rgba(255, 255, 255, 0.15)"
-                bicolor={true}
-                secondaryColor="#06b6d4"
-                secondaryStartWord="estuvieras"
-                animationDuration={0.4}
-              />
-            </h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={visor360InView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.05, duration: 0.4 }}
-              className="text-xl text-white/70 max-w-2xl mx-auto mt-6 leading-relaxed"
-            >
-              Haz click en cualquier vista para sumergirte en una experiencia panorámica completa de 360°
-            </motion.p>
+            <p className="text-lg font-sans font-medium text-negro-illimani/80 max-w-md text-right md:text-left">
+              Haz click en las tarjetas para abrir el visor panorámico. <br/>
+              Compatible con gafas VR 🥽.
+            </p>
           </motion.div>
 
-          {/* Grid de Thumbnails */}
+          {/* Grid de Bento Cards */}
           <motion.div 
             variants={staggerContainer}
             initial="hidden"
@@ -120,59 +123,58 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
               <motion.div
                 key={item.src + i}
                 variants={fadeInUp}
-                className="relative h-[400px] rounded-2xl overflow-hidden cursor-pointer group shadow-2xl border border-white/10 hover:border-cyan-500/30 transition-colors"
+                // CLASE NEO-CARD
+                className="neo-card relative h-[450px] flex flex-col cursor-pointer group overflow-hidden"
                 onClick={() => handleOpenVisor(item)}
-                style={{ transform: 'translateZ(0)' }}
               >
-                {visor360InView && (
-                  <img
-                    src={item.thumbnail}
-                    alt={item.caption}
-                    className="w-full h-full object-cover will-change-auto"
-                    loading="lazy"
-                    width="600"
-                    height="400"
-                    decoding="async"
-                    onLoad={(e) => e.target.style.transform = 'translateZ(0)'}
-                  />
-                )}
+                {/* Contenedor de Imagen */}
+                <div className="h-[85%] w-full relative overflow-hidden border-b-3 border-negro-illimani bg-gray-200">
+                  {visor360InView && (
+                    <img
+                      src={item.thumbnail}
+                      alt={item.caption}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[0.2] group-hover:grayscale-0"
+                      loading="lazy"
+                    />
+                  )}
+                  
+                  {/* Badge en esquina */}
+                  <div className="absolute top-4 left-4 bg-white border-2 border-black px-2 py-1 shadow-hard-sm z-10">
+                    <span className="text-xs font-mono font-bold uppercase">Vista {i + 1}</span>
+                  </div>
 
-                {/* Overlay con Info */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-6">
-                  <motion.div
-                    initial={{ y: 8, opacity: 0 }}
-                    animate={visor360InView ? { y: 0, opacity: 1 } : {}}
-                    transition={{ delay: 0.05 + i * 0.05 }}
-                    className="transition-transform group-hover:translate-y-0 translate-y-2"
-                  >
-                    <h3 className="text-2xl font-bold text-white mb-2">{item.caption}</h3>
-                    <div className="flex items-center gap-2">
-                      <span className="inline-block px-3 py-1 bg-cyan-500 text-white rounded-full text-xs font-bold uppercase tracking-wide">
-                        Ver 360° + VR
-                      </span>
-
-                      <svg className="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                      </svg>
+                  {/* Icono Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[2px]">
+                    <div className="bg-arcilla text-white w-16 h-16 rounded-full border-3 border-black flex items-center justify-center shadow-hard transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                        <span className="text-2xl">👁️</span>
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
 
-                {/* Gradient Hover Effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-tr from-cyan-500/20 via-transparent to-purple-500/20"></div>
+                {/* Footer de Tarjeta */}
+                <div className="h-[15%] bg-white p-4 flex items-center justify-between group-hover:bg-cielo/20 transition-colors">
+                  <h3 className="text-lg font-bold font-display uppercase truncate text-negro-illimani pr-4">
+                    {item.caption}
+                  </h3>
+                  <div className="w-8 h-8 border-2 border-black rounded-full flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
           
-          {/* Nota */}
-          <motion.p
+          {/* Nota al pie */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={visor360InView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5 }}
-            className="text-center text-white/60 mt-12 text-sm"
+            transition={{ delay: 0.8 }}
+            className="mt-16 text-center border-t-2 border-dashed border-negro-illimani/30 pt-8"
           >
-            💡 Click en cualquier imagen para explorar en modo inmersivo 360° con opción VR Cardboard 🥽
-          </motion.p>
+            <p className="font-mono text-sm text-negro-illimani">
+             [ SYSTEM ] : Renderizado de entorno completado.
+            </p>
+          </motion.div>
         </div>
       </section>
     </>
