@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react';
+import { forwardRef, useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Bounds, Center } from '@react-three/drei';
@@ -12,15 +12,38 @@ const IntroSection = forwardRef(function IntroSection(
 ) {
   const modelContainerRef = useRef(null);
 
+  // 1. Detección de dispositivo móvil para optimización
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    
+    // Throttle simple para resize
+    let timeoutId;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkMobile, 200);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Configuración para animaciones de TEXTO (se ejecuta una vez)
   const inViewConfig = { once: true, margin: '-50px', amount: 0.1 };
   const introInView = useInView(ref, inViewConfig);
+
+  // 2. Configuración para RENDERIZADO 3D (se actualiza constantemente)
+  // Esto permite pausar el Canvas cuando no se ve
+  const modelInView = useInView(modelContainerRef, { margin: "100px" });
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: 'circOut' }, // Animación más "seca"
+      transition: { duration: 0.5, ease: 'circOut' },
     },
   };
 
@@ -118,23 +141,32 @@ const IntroSection = forwardRef(function IntroSection(
 
             <Canvas
               camera={{ 
-                position: [0, 2, 9], // Un poco más lejos para encajar en el marco
+                position: [0, 2, 9],
                 fov: 45,
                 near: 0.1,
                 far: 2000
               }}
+              // OPTIMIZACIÓN 3: Ajustes de renderizado
+              dpr={isMobile ? [1, 1] : [1, 1.5]} // Menor resolución en móvil
+              frameloop={modelInView ? "always" : "never"} // Pausa render si no se ve
+              shadows={!isMobile} // Sin sombras en móvil
               gl={{ 
                 alpha: true, 
-                antialias: true,
-                preserveDrawingBuffer: true
+                antialias: !isMobile, // Sin antialias en móvil
+                preserveDrawingBuffer: true,
+                powerPreference: "high-performance"
               }}
-              dpr={[1, 1.5]}
-              frameloop="always"
             >
-              {/* Iluminación Ajustada para fondo claro */}
               <ambientLight intensity={1.2} />
-              <directionalLight intensity={2.5} position={[5, 10, 5]} castShadow />
-              <directionalLight intensity={1} position={[-5, 5, -5]} color="#D94E1F" /> {/* Luz de rebote color arcilla */}
+              
+              {/* OPTIMIZACIÓN 4: Luces condicionales */}
+              <directionalLight 
+                intensity={2.5} 
+                position={[5, 10, 5]} 
+                castShadow={!isMobile} 
+                shadow-mapSize={[512, 512]} // Mapa de sombras más pequeño
+              />
+              <directionalLight intensity={1} position={[-5, 5, -5]} color="#D94E1F" />
 
               <Bounds fit clip observe margin={0.5}>
                 <Center>
@@ -145,10 +177,10 @@ const IntroSection = forwardRef(function IntroSection(
               </Bounds>
 
               <OrbitControls
-                autoRotate={true}
+                autoRotate={modelInView} // Solo rotar si se está viendo
                 autoRotateSpeed={1.0}
                 enablePan={false}
-                enableZoom={false} // Desactivado zoom para no romper el layout
+                enableZoom={false}
                 enableRotate={true}
                 minPolarAngle={Math.PI / 4}
                 maxPolarAngle={Math.PI / 2}
