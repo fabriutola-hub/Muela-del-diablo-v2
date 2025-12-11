@@ -10,7 +10,7 @@
           "Norte": "600643.41", 
           "Sur": "8168633.396",
           "descripcion": "El punto más alto. Ofrece una vista panorámica de 360° de La Paz, El Alto y las montañas de la Cordillera Real.",
-          "imagenUrl": "/imagenes/Cima Muela.avif"
+          "imagenUrl": "/imagenes/cima-muela.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.056686002984137, -16.562254002477104 ] } 
       },
@@ -32,7 +32,7 @@
           "Norte": "600735.3", 
           "Sur": "8168571.27",
           "descripcion": "El punto de partida oficial de la aventura. Aquí comienza el ascenso hacia la cima. ¡Respira profundo!",
-          "imagenUrl": "/imagenes/IniciodelSendero.avif"
+          "imagenUrl": "/imagenes/inicio-del-sendero.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.05582208260806, -16.562811640505991 ] } 
       },
@@ -43,7 +43,7 @@
           "Norte": "600781.41", 
           "Sur": "8168568.19",
           "descripcion": "Zona de estacionamiento vehicular. Un lugar seguro para dejar el auto antes de comenzar la caminata.",
-          "imagenUrl": "/imagenes/Parqueo.avif"
+          "imagenUrl": "/imagenes/parqueo.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.055389806886936, -16.562837521219112 ] } 
       },
@@ -54,7 +54,7 @@
           "Norte": "600684.561", 
           "Sur": "8168603",
           "descripcion": "Impresionante formación rocosa que, desde el ángulo correcto, se asemeja a un cóndor vigilando el valle.",
-          "imagenUrl": "/imagenes/condor de piedra.avif"
+          "imagenUrl": "/imagenes/condor-de-piedra.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.056299001770043, -16.562526996634752 ] } 
       },
@@ -65,7 +65,7 @@
           "Norte": "600668.48", 
           "Sur": "8168564.131",
           "descripcion": "Curiosa roca erosionada por el viento que ha tomado la forma de un sapo o rana. ¡Un punto clásico para fotos!",
-          "imagenUrl": "/imagenes/Sapo de piedra.avif"
+          "imagenUrl": "/imagenes/sapo-de-piedra.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.056448001467729, -16.562879004297059 ] } 
       },
@@ -87,7 +87,7 @@
           "Norte": "600485.917", 
           "Sur": "8168724.192",
           "descripcion": "Un espacio sagrado (apacheta) usado para realizar ofrendas y ceremonias a la Pachamama y a los Apus (espíritus).",
-          "imagenUrl": "/imagenes/sitioOfrendas.avif"
+          "imagenUrl": "/imagenes/sitio-ofrendas.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.058166001698339, -16.56144000050579 ] } 
       },
@@ -131,7 +131,7 @@
           "Norte": "600492.152", 
           "Sur": "8168278.634",
           "descripcion": "Pequeña laguna estacional que se forma en las faldas de la muela, creando un hermoso contraste de agua y roca.",
-          "imagenUrl": "/imagenes/Laguna.avif"
+          "imagenUrl": "/imagenes/laguna.avif"
         }, 
         "geometry": { "type": "Point", "coordinates": [ -68.058087996695235, -16.565467002859759 ] } 
       }

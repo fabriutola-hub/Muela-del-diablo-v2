@@ -185,7 +185,7 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
         {/* Imagen de Fondo (Sin Blur, Cruda) */}
         <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute inset-0 will-change-transform">
           <img
-            src="/imagenes/fondo-muela (1).avif"
+            src="/imagenes/fondo-muela-1.avif"
             alt="La Muela del Diablo"
             className="w-full h-full object-cover grayscale-[0.3] contrast-125" // Un poco desaturada y contrastada
             loading="eager"
