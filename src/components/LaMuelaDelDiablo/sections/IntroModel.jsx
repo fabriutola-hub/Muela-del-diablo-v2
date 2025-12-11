@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei';
 import { useEffect } from 'react';
 
 export default function IntroModel() {
-  const gltf = useGLTF('/imagenes/models/muela_del_diablo_la_paz_-_bolivia (3).glb');
+  const gltf = useGLTF('/imagenes/models/MuelaDelDiablo_v1.glb');
   
   useEffect(() => {
     console.log('✅ Modelo cargado');
@@ -17,4 +17,4 @@ export default function IntroModel() {
 }
 
 // Preload del modelo
-useGLTF.preload('/imagenes/models/muela_del_diablo_la_paz_-_bolivia (3).glb');
+useGLTF.preload('/imagenes/models/MuelaDelDiablo_v1.glb');
