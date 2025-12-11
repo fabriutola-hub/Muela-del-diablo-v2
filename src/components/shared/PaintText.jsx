@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 export default function PaintText({
   text,
@@ -15,6 +15,16 @@ export default function PaintText({
   secondaryStartWord = null
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 1. Detección de móvil para simplificar físicas
+  useEffect(() => {
+    // Chequeo simple al montar
+    if (typeof window !== 'undefined') {
+      setIsMobile(window.innerWidth < 768);
+    }
+  }, []);
+
   const words = useMemo(() => text.split(" "), [text]);
 
   // Variantes del contenedor (Orquestador)
@@ -33,7 +43,8 @@ export default function PaintText({
     hidden: {
       y: "110%", // Escondido justo debajo
       opacity: 0,
-      rotate: 3, // Ligeramente rotado para dar sensación de "papel desordenado" al entrar
+      // OPTIMIZACIÓN CRÍTICA: Evitar rotación en móviles para reducir costo de GPU
+      rotate: isMobile ? 0 : 3, 
     },
     visible: {
       y: "0%",
@@ -51,7 +62,7 @@ export default function PaintText({
         opacity: { duration: 0.2 }
       },
     },
-  }), [shouldReduceMotion, animationDuration, ease]);
+  }), [shouldReduceMotion, animationDuration, ease, isMobile]);
 
   // Lógica para decidir si una palabra lleva "Resaltador" (Highlighter)
   const isHighlighted = (index) => {
@@ -87,6 +98,8 @@ export default function PaintText({
           >
             <motion.span
               variants={wordVariants}
+              // OPTIMIZACIÓN: Hint al navegador para preparar la GPU
+              style={{ willChange: 'transform' }}
               className={`inline-block px-1 relative ${highlighted ? `${highlightTextColor}` : textColor}`}
             >
               {/* CAPA DE RESALTADO (Highlighter) - Solo aparece si highlighted es true */}
