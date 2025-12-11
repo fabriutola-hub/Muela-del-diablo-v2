@@ -73,8 +73,6 @@ const MapSection = forwardRef((props, ref) => {
     <section ref={ref} className="py-20 md:py-32 bg-white border-b-3 border-negro-illimani relative overflow-hidden">
       
       {/* Fondo: Patrón Topográfico Sutil */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/Topographic_map_example.png')] bg-cover bg-center grayscale pointer-events-none" />
-      
       <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
         
         {/* --- HEADER --- */}
