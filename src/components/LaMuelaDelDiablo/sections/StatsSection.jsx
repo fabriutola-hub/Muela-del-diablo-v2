@@ -9,7 +9,7 @@ const Corner = ({ className }) => (
 );
 
 const StatsSection = forwardRef((props, ref) => {
-  const inViewConfig = { once: true, margin: "-100px", amount: 0.2 };
+  const inViewConfig = { once: true, margin: "-50px", amount: 0.1 };
   const statsInView = useInView(ref, inViewConfig);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 

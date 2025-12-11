@@ -59,7 +59,7 @@ const GalleryCard = ({ item, index }) => {
 
 // --- Componente Principal ---
 const GallerySection = forwardRef((props, ref) => {
-  const inViewConfig = { once: true, margin: "-100px", amount: 0.1 };
+  const inViewConfig = { once: true, margin: "-50px", amount: 0.1 };
   const galleryInView = useInView(ref, inViewConfig);
 
   return (
