@@ -1,25 +1,22 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, memo } from "react";
 
-export default function PaintText({
+const PaintText = memo(function PaintText({
   text,
   className,
-  // Colores por defecto de tu paleta Neo-Brutalista
-  textColor = "text-negro-illimani", // Color base (Negro)
-  highlightColor = "bg-arcilla",     // Color del resaltado (Naranja/Arcilla)
-  highlightTextColor = "text-white", // Color del texto cuando está resaltado
-  animationDuration = 0.6, 
+  textColor = "text-negro-illimani",
+  highlightColor = "bg-arcilla",
+  highlightTextColor = "text-white",
+  animationDuration = 0.6,
   staggerDelay = 0.05,
-  ease = [0.25, 1, 0.5, 1], // Curva más "rápida" y técnica
+  ease = [0.25, 1, 0.5, 1],
   bicolor = false,
   secondaryStartWord = null
 }) {
   const shouldReduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
-  // 1. Detección de móvil para simplificar físicas
   useEffect(() => {
-    // Chequeo simple al montar
     if (typeof window !== 'undefined') {
       setIsMobile(window.innerWidth < 768);
     }
@@ -27,7 +24,6 @@ export default function PaintText({
 
   const words = useMemo(() => text.split(" "), [text]);
 
-  // Variantes del contenedor (Orquestador)
   const containerVariants = useMemo(() => ({
     hidden: {},
     visible: {
@@ -38,13 +34,11 @@ export default function PaintText({
     },
   }), [shouldReduceMotion, staggerDelay]);
 
-  // Variantes de la PALABRA (Bloque sólido)
   const wordVariants = useMemo(() => ({
     hidden: {
-      y: "110%", // Escondido justo debajo
+      y: "110%",
       opacity: 0,
-      // OPTIMIZACIÓN CRÍTICA: Evitar rotación en móviles para reducir costo de GPU
-      rotate: isMobile ? 0 : 3, 
+      rotate: isMobile ? 0 : 3,
     },
     visible: {
       y: "0%",
@@ -64,24 +58,23 @@ export default function PaintText({
     },
   }), [shouldReduceMotion, animationDuration, ease, isMobile]);
 
-  // Lógica para decidir si una palabra lleva "Resaltador" (Highlighter)
   const isHighlighted = (index) => {
     if (!bicolor) return false;
-    
+
     if (secondaryStartWord) {
-      const startIndex = words.findIndex(word => 
+      const startIndex = words.findIndex(word =>
         word.toLowerCase().includes(secondaryStartWord.toLowerCase())
       );
       return startIndex !== -1 && index >= startIndex;
     }
-    
+
     const midPoint = Math.floor(words.length / 2);
     return index >= midPoint;
   };
 
   return (
-    <motion.h2 
-      className={`${className} font-display leading-[0.9] tracking-tight`} // Forzamos font-display
+    <motion.h2
+      className={`${className} font-display leading-[0.9] tracking-tight`}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -89,27 +82,22 @@ export default function PaintText({
     >
       {words.map((word, index) => {
         const highlighted = isHighlighted(index);
-        
+
         return (
-          // MÁSCARA DE RECORTE (Clipping Mask)
-          <span 
-            key={`${word}-${index}`} 
+          <span
+            key={`${word}-${index}`}
             className="inline-block overflow-hidden align-bottom mr-[0.2em] pb-[0.1em]"
           >
             <motion.span
               variants={wordVariants}
-              // OPTIMIZACIÓN: Hint al navegador para preparar la GPU
               style={{ willChange: 'transform' }}
               className={`inline-block px-1 relative ${highlighted ? `${highlightTextColor}` : textColor}`}
             >
-              {/* CAPA DE RESALTADO (Highlighter) - Solo aparece si highlighted es true */}
               {highlighted && (
-                <span 
+                <span
                   className={`absolute inset-0 ${highlightColor} -z-10 transform skew-x-[-10deg] border-2 border-black shadow-[2px_2px_0px_black]`}
-                ></span>
+                />
               )}
-              
-              {/* PALABRA */}
               {word}
             </motion.span>
           </span>
@@ -117,4 +105,6 @@ export default function PaintText({
       })}
     </motion.h2>
   );
-}
+});
+
+export default PaintText;
