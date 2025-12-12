@@ -14,7 +14,7 @@ const GalleryCard = ({ item, index }) => {
       // Aplicamos clases de grid (col/row span) y estilo base
       className={`${item.col} ${item.row} group relative perspective-1000 z-0 hover:z-20`}
     >
-      <div 
+      <div
         // CLASE NEO-CARD: La base del estilo
         className="neo-card w-full h-full p-3 bg-white flex flex-col hover:-rotate-1 transition-transform duration-300"
       >
@@ -27,7 +27,7 @@ const GalleryCard = ({ item, index }) => {
             loading="lazy"
             decoding="async"
           />
-          
+
           {/* Overlay de "Ver más" (Solo aparece en hover) */}
           <div className="absolute inset-0 bg-arcilla/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <span className="text-white font-display font-black text-3xl uppercase tracking-tighter drop-shadow-[4px_4px_0px_black]">
@@ -46,7 +46,7 @@ const GalleryCard = ({ item, index }) => {
               {item.caption}
             </h4>
           </div>
-          
+
           {/* Icono decorativo */}
           <div className="w-6 h-6 border-2 border-black flex items-center justify-center bg-paja group-hover:bg-arcilla transition-colors">
             <div className="w-1.5 h-1.5 bg-black rounded-full" />
@@ -64,12 +64,11 @@ const GallerySection = forwardRef((props, ref) => {
 
   return (
     <section ref={ref} className="py-20 md:py-32 bg-arena border-b-3 border-negro-illimani relative overflow-hidden">
-      
-      {/* Fondo Decorativo: Ruido sutil y líneas */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-multiply" />
-      
+
+      <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-multiply" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
+
       <div className="max-w-[1600px] mx-auto px-4 md:px-12 relative z-10">
-        
+
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 md:mb-24">
           <motion.div
@@ -80,7 +79,7 @@ const GallerySection = forwardRef((props, ref) => {
             <span className="inline-block px-4 py-1 bg-white border-2 border-black shadow-hard-sm font-mono text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 rotate-2">
               Archivo Fotográfico
             </span>
-            
+
             <div className="mb-4 md:mb-6">
               <PaintText
                 text="Captura la Magia"
@@ -95,7 +94,7 @@ const GallerySection = forwardRef((props, ref) => {
             </div>
 
             <p className="mt-2 md:mt-4 text-base md:text-xl font-sans font-medium text-negro-illimani max-w-lg mx-auto bg-white/50 p-2 border-l-4 border-arcilla">
-              Fragmentos congelados en el tiempo. <br/>
+              Fragmentos congelados en el tiempo. <br />
               Una mirada única al Auki Kollo.
             </p>
           </motion.div>
@@ -110,9 +109,9 @@ const GallerySection = forwardRef((props, ref) => {
 
         {/* Botón final de "Cargar más" o "Ver todo" (Opcional) */}
         <div className="mt-16 flex justify-center">
-            <button className="neo-btn-secondary">
-                Explorar Galería Completa
-            </button>
+          <button className="neo-btn-secondary">
+            Explorar Galería Completa
+          </button>
         </div>
 
       </div>

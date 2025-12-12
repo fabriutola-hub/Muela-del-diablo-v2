@@ -1,53 +1,39 @@
+/* Imports must come first */
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Mantenemos tus animaciones extras */
-@import "tw-animate-css";
-
-/* IMPORTANTE: Traemos las fuentes de Google Fonts
-   - Space Grotesk: Para títulos gigantes (Impacto)
-   - Space Mono: Para detalles técnicos y Chatbot
-   - Inter: Para lectura cómoda
-*/
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap');
-
-/* 🔥 CAPA BASE: Estilos por defecto para etiquetas HTML */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    /* Fondo color Arena y texto Negro Illimani por defecto */
     @apply bg-arena text-negro-illimani font-sans antialiased;
     overflow-x: hidden;
   }
 
-  /* Títulos: Todos usan ahora la fuente "Display" (Space Grotesk) */
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold uppercase tracking-tight;
   }
-  
-  /* Párrafos: Fuente limpia para lectura */
+
   p {
     @apply font-sans leading-relaxed;
   }
 }
 
-/* 🔥 CAPA COMPONENTES: Tus clases personalizadas Neo-Brutalistas */
 @layer components {
-  
-  /* === TARJETAS (Bento Box) === */
   .neo-card {
     @apply bg-white border-3 border-negro-illimani shadow-hard transition-all duration-200;
   }
-  /* Efecto al pasar el mouse: se "hunde" un poco */
+
   .neo-card:hover {
     @apply translate-x-[2px] translate-y-[2px] shadow-hard-hover;
   }
 
-  /* === BOTÓN PRIMARIO (Naranja Arcilla) === */
   .neo-btn {
     @apply relative inline-flex items-center justify-center px-8 py-4 
            bg-arcilla text-white font-display font-bold text-lg uppercase tracking-wider 
@@ -56,7 +42,6 @@
            active:translate-x-[4px] active:translate-y-[4px] active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  /* === BOTÓN SECUNDARIO (Blanco) === */
   .neo-btn-secondary {
     @apply relative inline-flex items-center justify-center px-8 py-4 
            bg-white text-negro-illimani font-display font-bold text-lg uppercase tracking-wider 
@@ -64,20 +49,18 @@
            hover:bg-arena hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-hard-hover 
            active:translate-x-[4px] active:translate-y-[4px] active:shadow-none;
   }
-  
-  /* === EFECTO DE TEXTO CON BORDE (STROKE) === */
-  /* Útil para títulos sobre imágenes oscuras */
+
   .text-stroke-black {
     -webkit-text-stroke: 2px black;
-    color: transparent; /* O el color de relleno que quieras */
+    color: transparent;
   }
+
   .text-stroke-white {
     -webkit-text-stroke: 2px white;
     color: transparent;
   }
 }
 
-/* ✅ TUS ESTILOS GLOBALES PREVIOS (Mantenidos) */
 * {
   box-sizing: border-box;
 }
@@ -89,20 +72,19 @@ html, body, #root {
 img, video, iframe {
   max-width: 100%;
   height: auto;
-  display: block; /* Ayuda a evitar espacios fantasma debajo de las imágenes */
+  display: block;
 }
 
-/* Utilidad para el visor 360 */
 .visor-thumbnail {
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Optimización para animaciones fluidas */
 .will-change-transform {
   will-change: transform;
 }
+
 .will-change-opacity {
   will-change: opacity;
 }
